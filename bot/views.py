@@ -17,13 +17,13 @@ from django.views import View
 from openpyxl import load_workbook
 from telebot import types
 from telebot.storage import StateMemoryStorage
-
+from core.settings import BOT_TOKEN, BOT_URL
 logger = telebot.logger
 telebot.logger.setLevel(logging.DEBUG)
 
 state_storage = StateMemoryStorage()
 
-bot = telebot.TeleBot('5684210743:AAGeidrT3wVYLSlTgPIl0nzvDmMtEMyCa4A')
+bot = telebot.TeleBot(BOT_TOKEN)
 
 
 class BotAPIView(View):
@@ -1693,4 +1693,4 @@ bot.enable_save_next_step_handlers(delay=2)
 
 bot.load_next_step_handlers()
 bot.set_webhook(
-    'https://9773-213-230-88-65.eu.ngrok.io/bot')
+    f'{BOT_URL}/bot')  # TODO: You should write your url which deployed this project

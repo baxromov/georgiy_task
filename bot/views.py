@@ -1,36 +1,29 @@
+import datetime
+import email
+import email.mime.application
 import logging
+import smtplib
+import ssl
 import time
+from datetime import datetime
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from threading import Thread
 
 import telebot
+from bs4 import BeautifulSoup as bs
 from django.http import JsonResponse
 from django.views import View
+from openpyxl import load_workbook
 from telebot import types
 from telebot.storage import StateMemoryStorage
-from telebot.handler_backends import State, StatesGroup
-from openpyxl import load_workbook
-import openpyxl
-
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-import email
-import os
-import smtplib
-import ssl
-import datetime
-from datetime import date
-from datetime import datetime, timedelta
-import email.mime.application
-from bs4 import BeautifulSoup as bs
-
-from core.settings import BOT_TOKEN, BOT_URL
 
 logger = telebot.logger
 telebot.logger.setLevel(logging.DEBUG)
 
 state_storage = StateMemoryStorage()
 
-bot = telebot.TeleBot(BOT_TOKEN)
+bot = telebot.TeleBot('5684210743:AAGeidrT3wVYLSlTgPIl0nzvDmMtEMyCa4A')
 
 
 class BotAPIView(View):
@@ -312,35 +305,34 @@ markup_calendar_year.add(item1, item2, item3, item4, item5, item6, item7, item8,
 
 @bot.message_handler(commands=['start'])
 def process_start(message):
-    keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-    msg = bot.send_message(message.chat.id,
-                           'Здравствуйте!\nПожалуйста, выберите язык\n\nAssalomu alaykum!\nIltimos, tilni tanlang',
-                           reply_markup=markupp)
+    markupp = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+    btn1 = types.KeyboardButton('Русский 🇷🇺')
+    btn2 = types.KeyboardButton('Oʻzbek tili 🇺🇿')
+    markupp.row(btn1, btn2)
+    bot.send_message(message.chat.id,
+                     'Здравствуйте!\nПожалуйста, выберите язык\n\nAssalomu alaykum!\nIltimos, tilni tanlang',
+                     reply_markup=markupp)
 
-    # schedule.every().day.at("03:30").do(send_email)
-    # schedule.every(10).seconds.do(send_email)
-    # Thread(target = schedule_checker).start()
-    ask_language(message)
-    # bot.register_next_step_handler_by_chat_id(message.chat.id, ask_language)
+    bot.register_next_step_handler(message, ask_language)
 
 
-# @bot.message_handler(content_types=['text'])
-# def checker(message):
-#     print(message.text)
-#     print("checker")
-#     if (message.text == '/start'):
-#         print("in if")
-#         process_start(message)
-#         return
-#     elif (message.text == 'Начать сначала'):
-#         process_start(message)
-#         return
-#     elif (message.text == 'Boshidan boshlash'):
-#         process_start(message)
-#         return
-#     else:
-#         print("in else")
-#         bot.reply_to(message, "Выбери вариант кнопкой (Tugmani bosib variantni tanlang)")
+@bot.message_handler(content_types=['text'])
+def checker(message):
+    print(message.text)
+    print("checker")
+    if (message.text == '/start'):
+        print("in if")
+        process_start(message)
+        return
+    elif (message.text == 'Начать сначала'):
+        process_start(message)
+        return
+    elif (message.text == 'Boshidan boshlash'):
+        process_start(message)
+        return
+    else:
+        print("in else")
+        bot.reply_to(message, "Выбери вариант кнопкой (Tugmani bosib variantni tanlang)")
 
 
 @bot.message_handler(content_types=['text'])
@@ -1657,6 +1649,7 @@ def send_email():
     clear_sheet()
     thread.join()
 
+
 def clear_sheet():
     fn = 'bot/data/example.xlsx'
     wb = load_workbook(fn)
@@ -1696,9 +1689,8 @@ schedule.every().day.at('03:30').do(send_email)
 thread = Thread(target=schedule_checker)
 thread.start()
 
-
 bot.enable_save_next_step_handlers(delay=2)
 
 bot.load_next_step_handlers()
 bot.set_webhook(
-    f'{BOT_URL}/bot')  # TODO: You should write your url which deployed this project
+    'https://9773-213-230-88-65.eu.ngrok.io/bot')

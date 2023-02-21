@@ -353,7 +353,7 @@ def ask_language(message):
     except KeyError:
         bot.reply_to(message,
                      "Выберите один из вариантов 'Русский' или 'Ozbek tili'\n\n 'Русский' yoki 'Ozbek tili' parametrlaridan birini tanlang ")
-        # bot.register_next_step_handler(message,ask_language)
+        bot.register_next_step_handler(message,ask_language)
 
 
 @bot.message_handler(content_types=['text'])

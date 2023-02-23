@@ -1601,7 +1601,7 @@ def edu(call):
     except Exception as e:
         bot.reply_to(message, "ERROR")
 
-
+"""
 def send_email():
     msg = MIMEMultipart("alternative")
     username = "{0.username}"
@@ -1616,7 +1616,7 @@ def send_email():
     now = datetime.now()
     response_date = now.strftime("%d.%m.%Y")
 
-    html = f"""
+    html = f'''
     <!DOCTYPE html>
     <html>
     <head>
@@ -1626,7 +1626,7 @@ def send_email():
     <h1>Отчёт за: {response_date} </h1>      
     </body>
     </html>
-    """
+    '''
     text = bs(html, "html.parser").text
     msg.attach(MIMEText(text, 'plain'))
     msg.attach(MIMEText(html, 'html', 'utf-8'))
@@ -1647,9 +1647,8 @@ def send_email():
 
     print("Successfully")
     clear_sheet()
-    thread.join()
-
-
+"""
+"""
 def clear_sheet():
     fn = 'bot/data/example.xlsx'
     wb = load_workbook(fn)
@@ -1657,7 +1656,7 @@ def clear_sheet():
     nb_row = ws.max_row
     ws.delete_rows(2, nb_row)
     wb.save('example.xlsx')
-
+"""
 
 def send_nothing(message):
     # try:
@@ -1685,9 +1684,9 @@ def schedule_checker():
         time.sleep(1)
 
 
-schedule.every().day.at('03:30').do(send_email)
-thread = Thread(target=schedule_checker)
-thread.start()
+# schedule.every().day.at('03:30').do(send_email)
+# thread = Thread(target=schedule_checker)
+# thread.start()
 
 bot.enable_save_next_step_handlers(delay=2)
 

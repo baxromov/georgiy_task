@@ -7,7 +7,7 @@ import email
 from bs4 import BeautifulSoup as bs
 from openpyxl import load_workbook
 from apscheduler.schedulers.blocking import BlockingScheduler
-
+import email.mime.application
 sched = BlockingScheduler()
 
 

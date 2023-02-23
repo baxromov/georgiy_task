@@ -1601,7 +1601,7 @@ def edu(call):
     except Exception as e:
         bot.reply_to(message, "ERROR")
 
-"""
+
 def send_email():
     msg = MIMEMultipart("alternative")
     username = "{0.username}"
@@ -1647,8 +1647,8 @@ def send_email():
 
     print("Successfully")
     clear_sheet()
-"""
-"""
+
+
 def clear_sheet():
     fn = 'bot/data/example.xlsx'
     wb = load_workbook(fn)
@@ -1656,7 +1656,7 @@ def clear_sheet():
     nb_row = ws.max_row
     ws.delete_rows(2, nb_row)
     wb.save('example.xlsx')
-"""
+
 
 def send_nothing(message):
     # try:
